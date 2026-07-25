@@ -1,5 +1,10 @@
 # ThunderTV — a compact IPTV web app (plan)
 
+> **Superseded — historical copy.** This plan moved to
+> [D-dezeeuw/ThunderTV](https://github.com/D-dezeeuw/ThunderTV)'s
+> `masterplan/architecture-plan.md` once that repository existed. Kept here
+> as a record of how the project started.
+
 A new IPTV project, loosely based on this codebase (thunder-tv / IPTVnator), built
 around four constraints:
 

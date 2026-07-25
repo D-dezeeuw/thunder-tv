@@ -1,5 +1,13 @@
 # ThunderTV — Masterplan
 
+> **Superseded — historical copy.** This document (and the `phases/`
+> alongside it) originated here but moved to
+> [D-dezeeuw/ThunderTV](https://github.com/D-dezeeuw/ThunderTV)'s own
+> `masterplan/` once that repository existed, so the project's roadmap lives
+> with its code. This copy is kept as a record of how the project started;
+> phase checkboxes are updated in the ThunderTV repository going forward,
+> not here.
+
 **30 phases (epics) × 10 features (stories) × 10 to-do items (tasks) = the full
 road from empty repo to a 1.0 release on web, desktop, and TV.**
 
