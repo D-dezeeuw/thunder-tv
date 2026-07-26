@@ -55,6 +55,7 @@ pnpm nx show projects
 ```
 
 - Run the install step in a fresh worktree before relying on Nx discovery, lint, test, or build commands. Without `node_modules`, local Nx modules are unavailable.
+- GitHub-hosted dependency forks are vendored as tarballs in `vendor/*.tgz` (see `vendor/git-dependencies/README.md`), so installs also work in environments that block `codeload.github.com` downloads.
 - Use scoped path aliases from `tsconfig.base.json` such as `@iptvnator/services`, `@iptvnator/shared/interfaces`, and `@iptvnator/ui/components`.
 - Do not add new imports from legacy bare aliases such as `services`, `shared-interfaces`, `components`, `m3u-state`, or `database`.
 - Every Nx project should keep `scope:*`, `domain:*`, and `type:*` tags in `project.json`.
@@ -315,12 +316,17 @@ libs/portal/xtream/
 │   │   │   ├── with-portal.feature.ts             # Playlist & portal status
 │   │   │   ├── with-content.feature.ts            # Categories & streams
 │   │   │   ├── with-selection.feature.ts          # UI selection & pagination
+│   │   │   ├── with-curation.feature.ts           # Curated live view (merged categories, variant groups)
 │   │   │   ├── with-search.feature.ts             # Search functionality
 │   │   │   ├── with-epg.feature.ts                # EPG data
 │   │   │   ├── with-player.feature.ts             # Stream URLs & player
 │   │   │   ├── with-playback-positions.feature.ts # Resume/playback positions
 │   │   │   └── index.ts
 │   │   ├── xtream.store.ts                        # Facade composing all features
+│   │   └── index.ts
+│   ├── curation/
+│   │   ├── live-category-curation.util.ts         # NL bucket + per-country category merging
+│   │   ├── live-channel-curation.util.ts          # Name parsing, quality ranking, variant grouping
 │   │   └── index.ts
 │   ├── services/
 │   │   ├── xtream-api.service.ts                  # Xtream Codes API calls
@@ -623,6 +629,13 @@ This project uses modern Angular signal-based APIs and patterns. **ALWAYS** use 
 - M3U/M3U8 files (local or URL)
 - Xtream Codes API (`username`, `password`, `serverUrl`)
 - Stalker portal (`macAddress`, `url`)
+
+**Curated Live View (Xtream)**:
+
+- Presentation-layer merging of provider live categories: `┃NL┃` categories collapse into Dutch semantic buckets (Nederland, Sport, Formule 1, Voetbal, Jeugd, …), other country prefixes collapse into one bucket per country; raw data is never modified and a toggle in the live category panel switches back to the provider's raw list (persisted, default on)
+- Duplicate quality feeds of the same channel (FHD/HD/4K/8K/replay) group behind one entry with a variant-count badge; a picker dialog lists all variants with replay and high-bandwidth flags. Default playback prefers 1080p/FHD over HD over 4K/8K (bandwidth-aware ranking)
+- Logic + store feature: `libs/portal/xtream/data-access/src/lib/curation/` and `stores/features/with-curation.feature.ts`; UI: workspace context panel toggle, `PortalChannelsListComponent` badges, `LiveChannelVariantDialogComponent`
+- See `docs/architecture/xtream-live-curation.md`
 
 **Video Players**:
 

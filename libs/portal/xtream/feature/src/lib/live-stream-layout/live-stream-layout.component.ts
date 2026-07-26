@@ -44,6 +44,8 @@ import {
 import {
     FavoriteItem,
     FavoritesService,
+    isCuratedLiveCategoryId,
+    XtreamLiveChannelGroup,
     XtreamUrlService,
     XtreamStore,
 } from '@iptvnator/portal/xtream/data-access';
@@ -68,8 +70,10 @@ import {
 } from '@iptvnator/shared/interfaces';
 import { PortalChannelsListComponent } from '../portal-channels-list/portal-channels-list.component';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { RuntimeCapabilitiesService, SettingsStore } from '@iptvnator/services';
 import { LiveStreamAutoOpenStateService } from './live-stream-auto-open-state.service';
+import { LiveChannelVariantDialogComponent } from './live-channel-variant-dialog.component';
 
 const LIVE_CHANNEL_SORT_STORAGE_KEY = 'xtream-live-channel-sort-mode';
 
@@ -125,6 +129,7 @@ export class LiveStreamLayoutComponent implements OnInit, OnDestroy {
         LiveLayoutSidebarStateService
     );
     private readonly liveAutoOpenState = inject(LiveStreamAutoOpenStateService);
+    private readonly dialog = inject(MatDialog);
 
     readonly categories = this.xtreamStore.getCategoriesBySelectedType;
     readonly categoryItemCounts = this.xtreamStore.getCategoryItemCounts;
@@ -251,9 +256,52 @@ export class LiveStreamLayoutComponent implements OnInit, OnDestroy {
         () => this.liveRootItemCount() > 0
     );
 
+    /** Variant groups for the selected curated category (null otherwise). */
+    readonly curatedGroups = this.xtreamStore.curatedSelectedLiveGroups;
+    readonly curatedChannelsOverride = computed<
+        XtreamLiveChannelItem[] | null
+    >(() => {
+        const groups = this.curatedGroups();
+        return groups
+            ? (groups.map(
+                  (group) => group.primary
+              ) as unknown as XtreamLiveChannelItem[])
+            : null;
+    });
+    readonly curatedVariantGroups = computed<Map<
+        number,
+        XtreamLiveChannelGroup
+    > | null>(() => {
+        const groups = this.curatedGroups();
+        if (!groups) {
+            return null;
+        }
+
+        const byPrimaryId = new Map<number, XtreamLiveChannelGroup>();
+        for (const group of groups) {
+            const primaryId = Number(
+                group.primary.xtream_id ?? group.primary.stream_id
+            );
+            if (Number.isFinite(primaryId)) {
+                byPrimaryId.set(primaryId, group);
+            }
+        }
+        return byPrimaryId;
+    });
+
     readonly selectedCategoryInfo = computed(() => {
         const categoryId = this.selectedCategoryId();
         if (!categoryId) return null;
+
+        if (isCuratedLiveCategoryId(categoryId)) {
+            const curated = this.xtreamStore
+                .curatedLiveCategoryLookup()
+                .get(categoryId);
+            return {
+                name: curated?.category_name ?? 'Channels',
+                count: this.curatedGroups()?.length ?? 0,
+            };
+        }
 
         const categories = this.categories();
         const category = categories?.find(
@@ -495,6 +543,33 @@ export class LiveStreamLayoutComponent implements OnInit, OnDestroy {
         this.playLive(item as XtreamLiveChannelItem);
     }
 
+    openVariantPicker(group: XtreamLiveChannelGroup): void {
+        const activeStreamId = Number(
+            (this.xtreamStore.selectedItem() as XtreamLiveChannelItem | null)
+                ?.xtream_id
+        );
+
+        LiveChannelVariantDialogComponent.open(this.dialog, {
+            group,
+            activeStreamId: Number.isFinite(activeStreamId)
+                ? activeStreamId
+                : null,
+        })
+            .afterClosed()
+            .subscribe((variant) => {
+                if (!variant) {
+                    return;
+                }
+
+                const item =
+                    variant.stream as unknown as XtreamLiveChannelItem;
+                this.playLive(item, true);
+                this.xtreamStore.setSelectedItem(
+                    item as unknown as Record<string, unknown>
+                );
+            });
+    }
+
     onLiveEpgPanelCollapsedChange(collapsed: boolean): void {
         const state: LiveEpgPanelState = collapsed ? 'collapsed' : 'expanded';
         this.liveEpgPanelState.set(state);
@@ -607,14 +682,34 @@ export class LiveStreamLayoutComponent implements OnInit, OnDestroy {
     }
 
     private getVisibleChannels(): XtreamLiveChannelItem[] {
+        const override = this.curatedChannelsOverride();
+        if (override) {
+            return override;
+        }
+
         return this.xtreamStore.selectItemsFromSelectedCategory() as XtreamLiveChannelItem[];
     }
 
     private selectLiveItemCategory(item: XtreamLiveChannelItem): void {
         const categoryId = Number(item.category_id);
-        if (Number.isFinite(categoryId) && categoryId > 0) {
-            this.xtreamStore.setSelectedCategory(categoryId);
+        if (!Number.isFinite(categoryId) || categoryId <= 0) {
+            return;
         }
+
+        // Curated view: playing a channel (or one of its variants) must not
+        // swap the sidebar back to the raw provider category. Keep the
+        // curated selection while the item belongs to one of its members.
+        const selectedCategoryId = this.selectedCategoryId();
+        if (isCuratedLiveCategoryId(selectedCategoryId)) {
+            const curated = this.xtreamStore
+                .curatedLiveCategoryLookup()
+                .get(selectedCategoryId as number);
+            if (curated?.memberCategoryIds.includes(categoryId)) {
+                return;
+            }
+        }
+
+        this.xtreamStore.setSelectedCategory(categoryId);
     }
 
     private async playCatchup(

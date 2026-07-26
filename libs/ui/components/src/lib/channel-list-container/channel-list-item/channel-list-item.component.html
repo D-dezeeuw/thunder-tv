@@ -102,11 +102,14 @@
             @if (showAuxActionButton()) {
                 <button
                     mat-icon-button
-                    class="favorite-button"
+                    class="favorite-button aux-action-button"
                     [matTooltip]="auxActionTooltip()"
                     (click)="onAuxActionClick($event)"
                 >
                     <mat-icon>{{ auxActionIcon() }}</mat-icon>
+                    @if (auxActionBadgeCount(); as badgeCount) {
+                        <span class="aux-action-badge">{{ badgeCount }}</span>
+                    }
                 </button>
             }
         </div>

@@ -634,6 +634,14 @@
             "SEARCH_PLACEHOLDER": "Grupları ara...",
             "NO_RESULTS": "Eşleşen grup bulunamadı",
             "SAVE": "Kaydet"
+        },
+        "VARIANTS": {
+            "TOOLTIP": "Quality variants",
+            "DIALOG_SUBTITLE": "Choose a quality variant",
+            "DEFAULT_QUALITY": "Original",
+            "REPLAY": "Replay available",
+            "HIGH_BANDWIDTH": "High bandwidth (4K/8K)",
+            "NOW_PLAYING": "Now playing"
         }
     },
     "TOP_MENU": {
@@ -1265,7 +1273,8 @@
             "ITEM_COUNT_OTHER": "{{count}} öğe",
             "SEARCH": "Ara",
             "SEARCH_CATEGORIES": "Kategorileri ara",
-            "RADIO_CATEGORIES": "Radyo kategorileri"
+            "RADIO_CATEGORIES": "Radyo kategorileri",
+            "CURATED_CATEGORIES": "Curated categories (merge & de-duplicate)"
         },
         "COMMAND_PALETTE": {
             "TITLE": "Komut paleti",

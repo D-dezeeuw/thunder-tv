@@ -634,6 +634,14 @@
             "SEARCH_PLACEHOLDER": "Keresés a csoportok között…",
             "NO_RESULTS": "Nem található a keresésnek megfelelő csoport",
             "SAVE": "Mentés"
+        },
+        "VARIANTS": {
+            "TOOLTIP": "Quality variants",
+            "DIALOG_SUBTITLE": "Choose a quality variant",
+            "DEFAULT_QUALITY": "Original",
+            "REPLAY": "Replay available",
+            "HIGH_BANDWIDTH": "High bandwidth (4K/8K)",
+            "NOW_PLAYING": "Now playing"
         }
     },
     "TOP_MENU": {
@@ -1265,7 +1273,8 @@
             "ITEM_COUNT_OTHER": "{{count}} elem",
             "SEARCH": "Keresés",
             "SEARCH_CATEGORIES": "Keresés a kategóriák között",
-            "RADIO_CATEGORIES": "Rádiókategóriák"
+            "RADIO_CATEGORIES": "Rádiókategóriák",
+            "CURATED_CATEGORIES": "Curated categories (merge & de-duplicate)"
         },
         "COMMAND_PALETTE": {
             "TITLE": "Parancspaletta",

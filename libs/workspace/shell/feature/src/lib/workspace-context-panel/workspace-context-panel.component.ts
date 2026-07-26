@@ -89,8 +89,27 @@ export class WorkspaceContextPanelComponent {
                 this.section() === 'radio')
     );
 
-    readonly xtreamCategories = this.xtreamStore.getCategoriesBySelectedType;
-    readonly xtreamCategoryItemCounts = this.xtreamStore.getCategoryItemCounts;
+    readonly isXtreamLiveSection = computed(
+        () =>
+            this.context().provider === 'xtreams' && this.section() === 'live'
+    );
+    readonly liveCurationEnabled = this.xtreamStore.liveCurationEnabled;
+    private readonly isCuratedLiveViewActive = computed(
+        () =>
+            this.isXtreamLiveSection() &&
+            this.liveCurationEnabled() &&
+            this.xtreamStore.curatedLiveCategories().length > 0
+    );
+    readonly xtreamCategories = computed(() =>
+        this.isCuratedLiveViewActive()
+            ? (this.xtreamStore.curatedLiveCategories() as WorkspaceCategoryLike[])
+            : this.xtreamStore.getCategoriesBySelectedType()
+    );
+    readonly xtreamCategoryItemCounts = computed(() =>
+        this.isCuratedLiveViewActive()
+            ? this.xtreamStore.curatedLiveCategoryCounts()
+            : this.xtreamStore.getCategoryItemCounts()
+    );
     readonly xtreamSelectedCategoryId = this.xtreamStore.selectedCategoryId;
     readonly xtreamSelectedTypeContentState =
         this.xtreamStore.selectedTypeContentState;
@@ -310,6 +329,20 @@ export class WorkspaceContextPanelComponent {
     setCategorySortMode(mode: PortalCategorySortMode): void {
         this.categorySortMode.set(mode);
         persistPortalCategorySortMode(mode);
+    }
+
+    toggleLiveCuration(): void {
+        const enabled = !this.liveCurationEnabled();
+        this.xtreamStore.setLiveCurationEnabled(enabled);
+
+        // The previous selection (curated bucket vs raw provider category)
+        // has no meaning in the other mode — reset to the live overview.
+        this.xtreamStore.setSelectedCategory(null);
+        const context = this.context();
+        void this.router.navigate(
+            ['/workspace', 'xtreams', context.playlistId, 'live'],
+            { replaceUrl: true }
+        );
     }
 
     openManageCategories(): void {

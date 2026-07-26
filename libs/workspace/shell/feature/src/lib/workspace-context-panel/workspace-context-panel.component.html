@@ -59,6 +59,26 @@
                         }
                     </mat-menu>
                 }
+                @if (isXtreamLiveSection()) {
+                    <button
+                        type="button"
+                        mat-icon-button
+                        class="context-header__action"
+                        [class.context-header__action--active]="
+                            liveCurationEnabled()
+                        "
+                        (click)="toggleLiveCuration()"
+                        [matTooltip]="
+                            'WORKSPACE.CONTEXT.CURATED_CATEGORIES' | translate
+                        "
+                        [attr.aria-label]="
+                            'WORKSPACE.CONTEXT.CURATED_CATEGORIES' | translate
+                        "
+                        [attr.aria-pressed]="liveCurationEnabled()"
+                    >
+                        <mat-icon>auto_awesome</mat-icon>
+                    </button>
+                }
                 @if (isXtreamCategories()) {
                     <button
                         type="button"

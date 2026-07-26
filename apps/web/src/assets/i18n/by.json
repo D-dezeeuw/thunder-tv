@@ -634,6 +634,14 @@
             "SEARCH_PLACEHOLDER": "Пошук груп...",
             "NO_RESULTS": "Адпаведных груп не знойдзена",
             "SAVE": "Захаваць"
+        },
+        "VARIANTS": {
+            "TOOLTIP": "Quality variants",
+            "DIALOG_SUBTITLE": "Choose a quality variant",
+            "DEFAULT_QUALITY": "Original",
+            "REPLAY": "Replay available",
+            "HIGH_BANDWIDTH": "High bandwidth (4K/8K)",
+            "NOW_PLAYING": "Now playing"
         }
     },
     "TOP_MENU": {
@@ -1265,7 +1273,8 @@
             "ITEM_COUNT_OTHER": "{{count}} элементаў",
             "SEARCH": "Пошук",
             "SEARCH_CATEGORIES": "Пошук катэгорый",
-            "RADIO_CATEGORIES": "Катэгорыі радыё"
+            "RADIO_CATEGORIES": "Катэгорыі радыё",
+            "CURATED_CATEGORIES": "Curated categories (merge & de-duplicate)"
         },
         "COMMAND_PALETTE": {
             "TITLE": "Палітра каманд",

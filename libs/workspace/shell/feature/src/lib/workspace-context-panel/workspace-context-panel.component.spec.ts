@@ -72,6 +72,10 @@ describe('WorkspaceContextPanelComponent', () => {
     const xtreamStore = {
         getCategoriesBySelectedType: xtreamCategories,
         getCategoryItemCounts: xtreamCategoryItemCounts,
+        liveCurationEnabled: signal(false),
+        curatedLiveCategories: signal<unknown[]>([]),
+        curatedLiveCategoryCounts: signal(new Map<number, number>()),
+        setLiveCurationEnabled: jest.fn(),
         selectedCategoryId: xtreamSelectedCategoryId,
         selectedTypeContentState: xtreamSelectedTypeContentState,
         selectedTypeContentReady: computed(

@@ -634,6 +634,14 @@
             "SEARCH_PLACEHOLDER": "搜索分组…",
             "NO_RESULTS": "未找到匹配的分组",
             "SAVE": "保存"
+        },
+        "VARIANTS": {
+            "TOOLTIP": "Quality variants",
+            "DIALOG_SUBTITLE": "Choose a quality variant",
+            "DEFAULT_QUALITY": "Original",
+            "REPLAY": "Replay available",
+            "HIGH_BANDWIDTH": "High bandwidth (4K/8K)",
+            "NOW_PLAYING": "Now playing"
         }
     },
     "TOP_MENU": {
@@ -1265,7 +1273,8 @@
             "ITEM_COUNT_OTHER": "{{count}} 项",
             "SEARCH": "搜索",
             "SEARCH_CATEGORIES": "搜索分类",
-            "RADIO_CATEGORIES": "广播分类"
+            "RADIO_CATEGORIES": "广播分类",
+            "CURATED_CATEGORIES": "Curated categories (merge & de-duplicate)"
         },
         "COMMAND_PALETTE": {
             "TITLE": "命令面板",

@@ -634,6 +634,14 @@
             "SEARCH_PLACEHOLDER": "قلب على مجموعات...",
             "NO_RESULTS": "ما تلقاتش حتى مجموعة مطابقة",
             "SAVE": "حفظ"
+        },
+        "VARIANTS": {
+            "TOOLTIP": "Quality variants",
+            "DIALOG_SUBTITLE": "Choose a quality variant",
+            "DEFAULT_QUALITY": "Original",
+            "REPLAY": "Replay available",
+            "HIGH_BANDWIDTH": "High bandwidth (4K/8K)",
+            "NOW_PLAYING": "Now playing"
         }
     },
     "TOP_MENU": {
@@ -1265,7 +1273,8 @@
             "ITEM_COUNT_OTHER": "{{count}} ديال العناصر",
             "SEARCH": "بحث",
             "SEARCH_CATEGORIES": "قلب على فئات",
-            "RADIO_CATEGORIES": "Radio Categories"
+            "RADIO_CATEGORIES": "Radio Categories",
+            "CURATED_CATEGORIES": "Curated categories (merge & de-duplicate)"
         },
         "COMMAND_PALETTE": {
             "TITLE": "لوحة الأوامر",

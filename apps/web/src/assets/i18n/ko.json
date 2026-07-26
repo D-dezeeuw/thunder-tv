@@ -634,6 +634,14 @@
             "SEARCH_PLACEHOLDER": "그룹 검색...",
             "NO_RESULTS": "일치하는 그룹을 찾을 수 없습니다",
             "SAVE": "저장"
+        },
+        "VARIANTS": {
+            "TOOLTIP": "Quality variants",
+            "DIALOG_SUBTITLE": "Choose a quality variant",
+            "DEFAULT_QUALITY": "Original",
+            "REPLAY": "Replay available",
+            "HIGH_BANDWIDTH": "High bandwidth (4K/8K)",
+            "NOW_PLAYING": "Now playing"
         }
     },
     "TOP_MENU": {
@@ -1265,7 +1273,8 @@
             "ITEM_COUNT_OTHER": "{{count}}개 항목",
             "SEARCH": "검색",
             "SEARCH_CATEGORIES": "카테고리 검색",
-            "RADIO_CATEGORIES": "라디오 카테고리"
+            "RADIO_CATEGORIES": "라디오 카테고리",
+            "CURATED_CATEGORIES": "Curated categories (merge & de-duplicate)"
         },
         "COMMAND_PALETTE": {
             "TITLE": "명령어 팔레트",

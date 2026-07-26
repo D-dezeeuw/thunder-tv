@@ -15,6 +15,7 @@ import { TmdbEnrichmentService } from '@iptvnator/services';
 import { createLogger } from '@iptvnator/portal/shared/util';
 import {
     withContent,
+    withCuration,
     withEpg,
     withPlaybackPositions,
     withPlayer,
@@ -37,6 +38,7 @@ import {
  * - withPortal: Playlist and portal status management
  * - withContent: Categories and streams management
  * - withSelection: UI selection and pagination
+ * - withCuration: Curated live view (merged categories, variant groups)
  * - withSearch: Search functionality
  * - withEpg: EPG (Electronic Program Guide) data
  * - withPlayer: Stream URL construction and player integration
@@ -53,6 +55,7 @@ export const XtreamStore = signalStore(
     withPortal(),
     withContent(),
     withSelection(),
+    withCuration(),
     withSearch(),
     withEpg(),
     withPlayer(),

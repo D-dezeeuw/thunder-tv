@@ -12,6 +12,7 @@ This file provides guidance to coding agents working in this repository.
 ## Agent Bootstrap
 
 - In a fresh worktree, run `pnpm install --frozen-lockfile` before relying on Nx project discovery, lint, test, or build commands. Without `node_modules`, `pnpm nx show projects` will fail because the local Nx modules are unavailable.
+- GitHub-hosted dependency forks are vendored as tarballs in `vendor/*.tgz` (see `vendor/git-dependencies/README.md`), so installs also work in environments that block `codeload.github.com` downloads.
 - After dependencies are installed, verify workspace discovery with `pnpm nx show projects`.
 - Use scoped path aliases from `tsconfig.base.json` such as `@iptvnator/services`, `@iptvnator/shared/interfaces`, and `@iptvnator/ui/components`. Do not add new imports from legacy bare aliases such as `services`, `shared-interfaces`, `components`, `m3u-state`, or `database`.
 - Every Nx project should keep `scope:*`, `domain:*`, and `type:*` tags in `project.json` so `@nx/enforce-module-boundaries` remains useful for humans and agents.

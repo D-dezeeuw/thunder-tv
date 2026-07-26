@@ -73,8 +73,11 @@
         <app-portal-channels-list
             [sortMode]="liveChannelSortMode()"
             [searchTermInput]="workspaceSearchTerm()"
+            [channelsOverride]="curatedChannelsOverride()"
+            [variantGroups]="curatedVariantGroups()"
             (playClicked)="playLive($event)"
             (playbackRequested)="playLive($event, true)"
+            (variantPickRequested)="openVariantPicker($event)"
         />
     </div>
 }
@@ -123,8 +126,11 @@
                 <app-portal-channels-list
                     [sortMode]="liveChannelSortMode()"
                     [searchTermInput]="workspaceSearchTerm()"
+                    [channelsOverride]="curatedChannelsOverride()"
+                    [variantGroups]="curatedVariantGroups()"
                     (playClicked)="playLive($event)"
                     (playbackRequested)="playLive($event, true)"
+                    (variantPickRequested)="openVariantPicker($event)"
                 />
             </div>
         } @else {

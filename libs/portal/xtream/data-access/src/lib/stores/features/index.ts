@@ -1,4 +1,5 @@
 export * from './with-content.feature';
+export * from './with-curation.feature';
 export * from './with-epg.feature';
 export * from './with-playback-positions.feature';
 export * from './with-player.feature';

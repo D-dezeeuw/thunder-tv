@@ -634,6 +634,14 @@
             "SEARCH_PLACEHOLDER": "Zoek groepen...",
             "NO_RESULTS": "Geen overeenkomende groepen gevonden",
             "SAVE": "Opslaan"
+        },
+        "VARIANTS": {
+            "TOOLTIP": "Kwaliteitsvarianten",
+            "DIALOG_SUBTITLE": "Kies een kwaliteitsvariant",
+            "DEFAULT_QUALITY": "Origineel",
+            "REPLAY": "Terugkijken beschikbaar",
+            "HIGH_BANDWIDTH": "Hoge bandbreedte (4K/8K)",
+            "NOW_PLAYING": "Speelt nu"
         }
     },
     "TOP_MENU": {
@@ -1265,7 +1273,8 @@
             "ITEM_COUNT_OTHER": "{{count}} items",
             "SEARCH": "Zoeken",
             "SEARCH_CATEGORIES": "Zoek categorieën",
-            "RADIO_CATEGORIES": "Radiocategorieën"
+            "RADIO_CATEGORIES": "Radiocategorieën",
+            "CURATED_CATEGORIES": "Samengevoegde categorieën (samenvoegen & ontdubbelen)"
         },
         "COMMAND_PALETTE": {
             "TITLE": "Opdrachtenpalet",

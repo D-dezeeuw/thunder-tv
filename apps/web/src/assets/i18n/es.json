@@ -634,6 +634,14 @@
             "SEARCH_PLACEHOLDER": "Buscar grupos…",
             "NO_RESULTS": "No se encontraron grupos coincidentes",
             "SAVE": "Guardar"
+        },
+        "VARIANTS": {
+            "TOOLTIP": "Quality variants",
+            "DIALOG_SUBTITLE": "Choose a quality variant",
+            "DEFAULT_QUALITY": "Original",
+            "REPLAY": "Replay available",
+            "HIGH_BANDWIDTH": "High bandwidth (4K/8K)",
+            "NOW_PLAYING": "Now playing"
         }
     },
     "TOP_MENU": {
@@ -1265,7 +1273,8 @@
             "ITEM_COUNT_OTHER": "{{count}} elementos",
             "SEARCH": "Buscar",
             "SEARCH_CATEGORIES": "Buscar categorías",
-            "RADIO_CATEGORIES": "Categorías de radio"
+            "RADIO_CATEGORIES": "Categorías de radio",
+            "CURATED_CATEGORIES": "Curated categories (merge & de-duplicate)"
         },
         "COMMAND_PALETTE": {
             "TITLE": "Paleta de comandos",

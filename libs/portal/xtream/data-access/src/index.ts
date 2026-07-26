@@ -1,4 +1,5 @@
 export * from './lib/account-info/account-info.interface';
+export * from './lib/curation';
 export * from './lib/data-sources';
 export * from './lib/services';
 export * from './lib/stores';

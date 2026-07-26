@@ -45,6 +45,7 @@ import { EpgQueueService } from '@iptvnator/portal/xtream/data-access';
 import { XtreamCredentials } from '@iptvnator/portal/xtream/data-access';
 import { FavoritesService } from '@iptvnator/portal/xtream/data-access';
 import { XtreamStore } from '@iptvnator/portal/xtream/data-access';
+import { XtreamLiveChannelGroup } from '@iptvnator/portal/xtream/data-access';
 import { RuntimeCapabilitiesService } from '@iptvnator/services';
 
 export interface XtreamChannelListItem {
@@ -82,8 +83,17 @@ interface XtreamCategoryLike {
 export class PortalChannelsListComponent implements AfterViewInit, OnDestroy {
     readonly playClicked = output<XtreamChannelListItem>();
     readonly playbackRequested = output<XtreamChannelListItem>();
+    readonly variantPickRequested = output<XtreamLiveChannelGroup>();
     readonly sortMode = input<PortalChannelSortMode>('server');
     readonly channelsOverride = input<XtreamChannelListItem[] | null>(null);
+    /**
+     * Curated view: variant groups keyed by the primary stream id. Rows
+     * with more than one variant show a badge that opens the variant
+     * picker via `variantPickRequested`.
+     */
+    readonly variantGroups = input<Map<number, XtreamLiveChannelGroup> | null>(
+        null
+    );
     readonly searchTermInput = input('');
 
     readonly xtreamStore = inject(XtreamStore);
@@ -190,6 +200,19 @@ export class PortalChannelsListComponent implements AfterViewInit, OnDestroy {
 
     trackBy(_index: number, item: XtreamChannelListItem | XtreamItem) {
         return item.xtream_id;
+    }
+
+    variantCountFor(item: XtreamChannelListItem): number {
+        const group = this.variantGroups()?.get(Number(item.xtream_id));
+        const count = group?.variants.length ?? 0;
+        return count > 1 ? count : 0;
+    }
+
+    onVariantBadgeClick(item: XtreamChannelListItem): void {
+        const group = this.variantGroups()?.get(Number(item.xtream_id));
+        if (group && group.variants.length > 1) {
+            this.variantPickRequested.emit(group);
+        }
     }
 
     ngOnInit(): void {

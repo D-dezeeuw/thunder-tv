@@ -634,6 +634,14 @@
             "SEARCH_PLACEHOLDER": "グループを検索...",
             "NO_RESULTS": "一致するグループが見つかりません",
             "SAVE": "保存"
+        },
+        "VARIANTS": {
+            "TOOLTIP": "Quality variants",
+            "DIALOG_SUBTITLE": "Choose a quality variant",
+            "DEFAULT_QUALITY": "Original",
+            "REPLAY": "Replay available",
+            "HIGH_BANDWIDTH": "High bandwidth (4K/8K)",
+            "NOW_PLAYING": "Now playing"
         }
     },
     "TOP_MENU": {
@@ -1265,7 +1273,8 @@
             "ITEM_COUNT_OTHER": "{{count}}件",
             "SEARCH": "検索",
             "SEARCH_CATEGORIES": "カテゴリーを検索",
-            "RADIO_CATEGORIES": "ラジオカテゴリ"
+            "RADIO_CATEGORIES": "ラジオカテゴリ",
+            "CURATED_CATEGORIES": "Curated categories (merge & de-duplicate)"
         },
         "COMMAND_PALETTE": {
             "TITLE": "コマンドパレット",

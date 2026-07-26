@@ -1,0 +1,66 @@
+<h2 mat-dialog-title class="variant-dialog-title">
+    {{ data.group.displayName }}
+    <span class="variant-dialog-subtitle">
+        {{ 'CHANNELS.VARIANTS.DIALOG_SUBTITLE' | translate }}
+    </span>
+</h2>
+
+<mat-dialog-content>
+    <ul class="variant-list">
+        @for (variant of variants(); track $index) {
+            <li>
+                <button
+                    type="button"
+                    class="variant-row"
+                    [class.variant-row--active]="isActive(variant)"
+                    (click)="pick(variant)"
+                >
+                    <span class="variant-quality">
+                        {{
+                            variant.qualityLabel ||
+                                ('CHANNELS.VARIANTS.DEFAULT_QUALITY'
+                                    | translate)
+                        }}
+                    </span>
+                    <span class="variant-name">{{ variant.originalName }}</span>
+                    <span class="variant-flags">
+                        @if (variant.hasArchive) {
+                            <mat-icon
+                                class="variant-flag"
+                                [matTooltip]="
+                                    'CHANNELS.VARIANTS.REPLAY' | translate
+                                "
+                                >history</mat-icon
+                            >
+                        }
+                        @if (isHighBandwidth(variant)) {
+                            <mat-icon
+                                class="variant-flag variant-flag--warn"
+                                [matTooltip]="
+                                    'CHANNELS.VARIANTS.HIGH_BANDWIDTH'
+                                        | translate
+                                "
+                                >network_check</mat-icon
+                            >
+                        }
+                        @if (isActive(variant)) {
+                            <mat-icon
+                                class="variant-flag variant-flag--active"
+                                [matTooltip]="
+                                    'CHANNELS.VARIANTS.NOW_PLAYING' | translate
+                                "
+                                >play_circle</mat-icon
+                            >
+                        }
+                    </span>
+                </button>
+            </li>
+        }
+    </ul>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>
+        {{ 'CLOSE' | translate }}
+    </button>
+</mat-dialog-actions>

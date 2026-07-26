@@ -634,6 +634,14 @@
             "SEARCH_PLACEHOLDER": "Szukaj grup...",
             "NO_RESULTS": "Nie znaleziono pasujących grup",
             "SAVE": "Zapisz"
+        },
+        "VARIANTS": {
+            "TOOLTIP": "Quality variants",
+            "DIALOG_SUBTITLE": "Choose a quality variant",
+            "DEFAULT_QUALITY": "Original",
+            "REPLAY": "Replay available",
+            "HIGH_BANDWIDTH": "High bandwidth (4K/8K)",
+            "NOW_PLAYING": "Now playing"
         }
     },
     "TOP_MENU": {
@@ -1265,7 +1273,8 @@
             "ITEM_COUNT_OTHER": "{{count}} elementów",
             "SEARCH": "Szukaj",
             "SEARCH_CATEGORIES": "Szukaj kategorii",
-            "RADIO_CATEGORIES": "Kategorie radia"
+            "RADIO_CATEGORIES": "Kategorie radia",
+            "CURATED_CATEGORIES": "Curated categories (merge & de-duplicate)"
         },
         "COMMAND_PALETTE": {
             "TITLE": "Paleta poleceń",

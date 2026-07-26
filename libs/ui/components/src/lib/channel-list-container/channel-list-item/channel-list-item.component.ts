@@ -62,6 +62,8 @@ export class ChannelListItemComponent {
     readonly progressPercentage = input(0);
     readonly auxActionIcon = input('delete');
     readonly auxActionTooltip = input('');
+    /** Optional small count badge on the aux button (e.g. variant count). */
+    readonly auxActionBadgeCount = input<number | null>(null);
 
     readonly clicked = output<void>();
     readonly activated = output<void>();

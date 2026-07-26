@@ -634,6 +634,14 @@
             "SEARCH_PLACEHOLDER": "Αναζήτηση ομάδων...",
             "NO_RESULTS": "Δεν βρέθηκαν αντίστοιχες ομάδες",
             "SAVE": "Αποθήκευση"
+        },
+        "VARIANTS": {
+            "TOOLTIP": "Quality variants",
+            "DIALOG_SUBTITLE": "Choose a quality variant",
+            "DEFAULT_QUALITY": "Original",
+            "REPLAY": "Replay available",
+            "HIGH_BANDWIDTH": "High bandwidth (4K/8K)",
+            "NOW_PLAYING": "Now playing"
         }
     },
     "TOP_MENU": {
@@ -1265,7 +1273,8 @@
             "ITEM_COUNT_OTHER": "{{count}} στοιχεία",
             "SEARCH": "Αναζήτηση",
             "SEARCH_CATEGORIES": "Αναζήτηση κατηγοριών",
-            "RADIO_CATEGORIES": "Κατηγορίες ραδιοφώνου"
+            "RADIO_CATEGORIES": "Κατηγορίες ραδιοφώνου",
+            "CURATED_CATEGORIES": "Curated categories (merge & de-duplicate)"
         },
         "COMMAND_PALETTE": {
             "TITLE": "Παλέτα εντολών",

@@ -634,6 +634,14 @@
             "SEARCH_PLACEHOLDER": "搜尋群組...",
             "NO_RESULTS": "找不到符合的群組",
             "SAVE": "儲存"
+        },
+        "VARIANTS": {
+            "TOOLTIP": "Quality variants",
+            "DIALOG_SUBTITLE": "Choose a quality variant",
+            "DEFAULT_QUALITY": "Original",
+            "REPLAY": "Replay available",
+            "HIGH_BANDWIDTH": "High bandwidth (4K/8K)",
+            "NOW_PLAYING": "Now playing"
         }
     },
     "TOP_MENU": {
@@ -1265,7 +1273,8 @@
             "ITEM_COUNT_OTHER": "{{count}} 個項目",
             "SEARCH": "搜尋",
             "SEARCH_CATEGORIES": "搜尋類別",
-            "RADIO_CATEGORIES": "廣播分類"
+            "RADIO_CATEGORIES": "廣播分類",
+            "CURATED_CATEGORIES": "Curated categories (merge & de-duplicate)"
         },
         "COMMAND_PALETTE": {
             "TITLE": "命令選擇區",

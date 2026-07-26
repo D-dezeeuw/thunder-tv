@@ -634,6 +634,14 @@
             "SEARCH_PLACEHOLDER": "Поиск групп…",
             "NO_RESULTS": "Подходящих групп не найдено",
             "SAVE": "Сохранить"
+        },
+        "VARIANTS": {
+            "TOOLTIP": "Quality variants",
+            "DIALOG_SUBTITLE": "Choose a quality variant",
+            "DEFAULT_QUALITY": "Original",
+            "REPLAY": "Replay available",
+            "HIGH_BANDWIDTH": "High bandwidth (4K/8K)",
+            "NOW_PLAYING": "Now playing"
         }
     },
     "TOP_MENU": {
@@ -1265,7 +1273,8 @@
             "ITEM_COUNT_OTHER": "{{count}} элементов",
             "SEARCH": "Поиск",
             "SEARCH_CATEGORIES": "Поиск категорий",
-            "RADIO_CATEGORIES": "Категории радио"
+            "RADIO_CATEGORIES": "Категории радио",
+            "CURATED_CATEGORIES": "Curated categories (merge & de-duplicate)"
         },
         "COMMAND_PALETTE": {
             "TITLE": "Палитра команд",

@@ -47,9 +47,11 @@ const LIVE_CHANNEL_SORT_STORAGE_KEY = 'xtream-live-channel-sort-mode';
 class StubPortalChannelsListComponent {
     readonly sortMode = input<'server' | 'name-asc' | 'name-desc'>('server');
     readonly channelsOverride = input<unknown[] | null>(null);
+    readonly variantGroups = input<unknown | null>(null);
     readonly searchTermInput = input('');
     readonly playClicked = output<unknown>();
     readonly playbackRequested = output<unknown>();
+    readonly variantPickRequested = output<unknown>();
 }
 
 @Component({
@@ -161,6 +163,8 @@ describe('LiveStreamLayoutComponent', () => {
     const xtreamStore = {
         getCategoriesBySelectedType: categories,
         getCategoryItemCounts: categoryItemCounts,
+        curatedSelectedLiveGroups: signal(null),
+        curatedLiveCategoryLookup: signal(new Map()),
         getPaginatedContent: paginatedContent,
         getTotalPages: totalPages,
         epgItems,
