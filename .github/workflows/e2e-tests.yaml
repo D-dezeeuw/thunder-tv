@@ -46,7 +46,10 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                os: [ubuntu-latest, macos-latest, windows-latest]
+                # macOS is disabled in this fork (no macOS target; the
+                # macOS runners were also the main source of flaky runs).
+                # Add macos-latest back to re-enable.
+                os: [ubuntu-latest, windows-latest]
 
         steps:
             - uses: actions/checkout@v4
