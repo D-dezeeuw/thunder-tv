@@ -1344,5 +1344,13 @@
             "NO_ITEMS_TITLE": "Nothing watched yet",
             "NO_ITEMS_BODY": "Start watching anything from your library and it will show up here."
         }
+    },
+    "CONNECT": {
+        "CONNECTING": "Verbinden met je portaal…",
+        "ERROR_TITLE": "Kan deze link niet openen",
+        "ERROR_MISSING_FIELDS": "In deze link ontbreekt de server-URL, gebruikersnaam of wachtwoord.",
+        "ERROR_INVALID_URL": "De server-URL in deze link is ongeldig.",
+        "ERROR_FAILED": "Er ging iets mis bij het openen van dit portaal. Probeer het opnieuw.",
+        "GO_TO_SOURCES": "Ga naar bronnen"
     }
 }

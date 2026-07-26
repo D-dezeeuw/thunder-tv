@@ -1,0 +1,27 @@
+<div class="connect-shell">
+    @if (state() === 'connecting') {
+        <mat-spinner diameter="48" />
+        <p class="connect-message">
+            {{ 'CONNECT.CONNECTING' | translate }}
+        </p>
+    } @else {
+        <mat-icon class="connect-error-icon">link_off</mat-icon>
+        <h1 class="connect-title">{{ 'CONNECT.ERROR_TITLE' | translate }}</h1>
+        <p class="connect-message">
+            @switch (errorReason()) {
+                @case ('missing-fields') {
+                    {{ 'CONNECT.ERROR_MISSING_FIELDS' | translate }}
+                }
+                @case ('invalid-url') {
+                    {{ 'CONNECT.ERROR_INVALID_URL' | translate }}
+                }
+                @default {
+                    {{ 'CONNECT.ERROR_FAILED' | translate }}
+                }
+            }
+        </p>
+        <a mat-stroked-button routerLink="/workspace/sources">
+            {{ 'CONNECT.GO_TO_SOURCES' | translate }}
+        </a>
+    }
+</div>

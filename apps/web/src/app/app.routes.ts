@@ -142,6 +142,15 @@ export const routes: Routes = [
         ],
     },
     {
+        // Bookmarkable Xtream deep link: imports the portal on first use,
+        // then jumps straight into the already-imported portal.
+        path: 'connect',
+        loadComponent: () =>
+            import('@iptvnator/playlist/import/feature').then(
+                (c) => c.XtreamConnectRouteComponent
+            ),
+    },
+    {
         path: 'settings',
         redirectTo: '/workspace/settings',
         pathMatch: 'full',

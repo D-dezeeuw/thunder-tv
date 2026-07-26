@@ -449,6 +449,7 @@ See `docs/architecture/m3u-playlist-module.md` for complete documentation.
 - Global search: `/workspace/search` (Electron-only; a guard redirects the PWA to `/workspace/sources`)
 - Downloads: `/workspace/downloads`
 - Settings: `/workspace/settings` (`/settings` redirects there)
+- Xtream connect deep link (bookmarkable): `/connect?serverUrl=…&username=…&password=…` (optional `title`, `section=live|vod|series`) — imports the Xtream portal on first use, then reuses the already-imported portal and navigates into it (`XtreamConnectRouteComponent` in `libs/playlist/import/feature`, dedup util `xtream-connect.util.ts`)
 
 **Service Architecture** (Factory Pattern):
 

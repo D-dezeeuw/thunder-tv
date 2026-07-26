@@ -1344,5 +1344,13 @@
             "NO_ITEMS_TITLE": "Nothing watched yet",
             "NO_ITEMS_BODY": "Start watching anything from your library and it will show up here."
         }
+    },
+    "CONNECT": {
+        "CONNECTING": "Connecting to your portal…",
+        "ERROR_TITLE": "Couldn't open this link",
+        "ERROR_MISSING_FIELDS": "This link is missing the server URL, username, or password.",
+        "ERROR_INVALID_URL": "The server URL in this link is not valid.",
+        "ERROR_FAILED": "Something went wrong while opening this portal. Please try again.",
+        "GO_TO_SOURCES": "Go to sources"
     }
 }
