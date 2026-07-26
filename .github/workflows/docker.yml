@@ -47,6 +47,10 @@ jobs:
             - name: Prepare Docker metadata
               id: docker-meta
               shell: bash
+              env:
+                  # Forks without Docker Hub credentials build the image
+                  # without publishing instead of failing at login.
+                  HAS_DOCKERHUB_CREDENTIALS: ${{ secrets.DOCKERHUB_USERNAME != '' && secrets.DOCKERHUB_TOKEN != '' }}
               run: |
                   set -euo pipefail
 
@@ -86,6 +90,13 @@ jobs:
                   4gray/iptvnator:sha-${short_sha}
                   TAGS
                   )
+                  fi
+
+                  if [[ "${publish}" == "true" && "${HAS_DOCKERHUB_CREDENTIALS}" != "true" ]]; then
+                    echo "::notice::Docker Hub credentials are not configured — building the image without publishing."
+                    publish="false"
+                    platforms="linux/amd64"
+                    tags="4gray/iptvnator:local-${short_sha}"
                   fi
 
                   {
