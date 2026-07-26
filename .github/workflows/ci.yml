@@ -133,6 +133,10 @@ jobs:
 
             - name: Upload unit coverage to Codecov
               if: always()
+              # Best-effort: without CODECOV_TOKEN (forks), tokenless uploads
+              # are sometimes rejected and the action exits nonzero even with
+              # fail_ci_if_error: false. Coverage upload must never fail CI.
+              continue-on-error: true
               uses: codecov/codecov-action@v6
               with:
                   files: ./coverage/merged/lcov.info,./coverage/merged/cobertura-coverage.xml
