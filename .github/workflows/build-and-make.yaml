@@ -865,6 +865,10 @@ jobs:
             - name: Make Electron app
               if: matrix.os != 'macos' || github.event_name == 'pull_request' || vars.CSC_NAME == ''
               env:
+                  # Without a configured signing identity (forks without
+                  # CSC_NAME), stop electron-builder from probing the keychain
+                  # — in CI mode a failed probe is a hard error, not a warning.
+                  CSC_IDENTITY_AUTO_DISCOVERY: ${{ vars.CSC_NAME != '' && 'true' || 'false' }}
                   IPTVNATOR_EMBEDDED_MPV_PLATFORM: ${{ matrix.embedded_mpv_platform || '' }}
                   IPTVNATOR_EMBEDDED_MPV_ARCH: ${{ matrix.embedded_mpv_arch || matrix.arch || '' }}
                   IPTVNATOR_LINUX_FRAME_COPY_PROFILE: ${{ matrix.linux_profile || '' }}
