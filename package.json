@@ -96,7 +96,7 @@
         "epg-parser": "^0.1.6",
         "fix-path": "5.0.0",
         "hls.js": "1.6.13",
-        "iptv-playlist-parser": "github:4gray/iptv-playlist-parser#v0.15.2-iptvnator.2",
+        "iptv-playlist-parser": "file:vendor/iptv-playlist-parser-0.15.2-iptvnator.2.tgz",
         "marked": "18.0.5",
         "mpegts.js": "1.8.0",
         "ms": "2.1.3",
@@ -236,7 +236,9 @@
             "rollup@4.52.3": "4.59.0",
             "smol-toml@1.6.0": "1.6.1",
             "svgo@3.3.2": "3.3.3",
-            "yaml@1.10.2": "1.10.3"
+            "webworkify-webpack": "file:vendor/webworkify-webpack-2.1.5.tgz",
+            "yaml@1.10.2": "1.10.3",
+            "@electron/node-gyp": "file:vendor/electron-node-gyp-10.2.0-electron.1.tgz"
         },
         "patchedDependencies": {
             "nx-electron@22.0.0": "patches/nx-electron@22.0.0.patch"
