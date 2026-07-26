@@ -190,6 +190,17 @@ pnpm nx test web --configuration=ci
 
 Before finishing behavior changes or bug fixes, follow `Regression Prevention And Test Updates` above and report the test impact decision in the final summary.
 
+### Verifying IPTV Test Credentials
+
+Real Xtream test credentials can be provided via environment variables (e.g. in the remote session's environment configuration): `IPTV_URL`, `IPTV_USER`, `IPTV_PASSWORD`.
+
+```bash
+# Verify the credentials against the portal (handshake + catalog counts)
+node tools/iptv/verify-credentials.mjs
+```
+
+The script mirrors the app's `player_api.php` handshake (VLC-style User-Agent, `normalizeXtreamServerUrl`/`resolveXtreamPortalStatus` semantics) and never prints the username, password, or full host — pass `--show-host` locally to see the host. Exit code 0 means the account is active.
+
 ### Linting
 
 ```bash
