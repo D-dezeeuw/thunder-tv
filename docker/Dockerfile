@@ -10,6 +10,9 @@ WORKDIR /usr/src/app
 COPY .npmrc ./
 COPY package.json pnpm-lock.yaml ./
 COPY patches ./patches
+# Vendored git-dependency tarballs referenced via file: specs in
+# package.json (see vendor/git-dependencies/README.md).
+COPY vendor ./vendor
 
 RUN corepack enable && pnpm install --frozen-lockfile --ignore-scripts
 
