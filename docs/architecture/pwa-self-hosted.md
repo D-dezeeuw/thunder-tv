@@ -72,6 +72,36 @@ The current self-hosted PWA uses these `apps/web-backend` routes:
 - `GET /parse?targetId=<id>`
 - `GET /xtream?targetId=<id>&username=<u>&password=<p>&action=<action>`
 - `GET /stalker?targetId=<id>&macAddress=<mac>&action=<action>`
+- `GET /stream?u=<base64url-stream-url>[&sig=<hmac>][&ext=<media-ext>]`
+
+### Stream relay
+
+IPTV providers frequently omit CORS headers on their stream edges (or only
+on some load-balanced edges), which blocks hls.js/mpegts.js playback in the
+browser even when the API responds with CORS headers. `GET /stream` fetches
+the stream server-side (implementation in
+`apps/web-backend/src/app/stream-proxy.ts`) and re-serves it under the
+backend's CORS policy:
+
+- Unsigned requests are only served when the target URL's origin matches a
+  provider target previously registered through `/provider-targets`; the
+  relay is not an open proxy.
+- HLS playlists are rewritten so every URI becomes a relative
+  `stream?u=..&sig=..` sibling URL signed with a per-process HMAC. This
+  keeps provider-chosen redirect/CDN segment hosts working while clients
+  cannot forge arbitrary relay targets. Relative rewriting keeps the relay
+  working behind any mount prefix (`/stream` and `/api/stream` alike).
+- Raw MPEG-TS live streams and VOD files are piped through with `Range` /
+  `Content-Range` passthrough; upstream URLs also pass the same
+  private-network policy used for provider registration.
+
+On the client, `PwaService.resolvePlaybackUrl()` routes playback URLs whose
+origin belongs to a registered provider target through the relay (carrying
+the original media extension as the `ext` query key so player engine
+selection still works); `WebPlayerViewComponent` applies it for all built-in
+players, while the diagnostics copy-URL action keeps the direct provider
+URL. Electron playback stays direct — `DataService.resolvePlaybackUrl()` is
+an identity there.
 
 The PWA continues to use `PwaService`; only the backend base URL is resolved at
 runtime. Electron routes remain owned by the Electron backend and preload

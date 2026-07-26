@@ -9,6 +9,7 @@ import epgParser from 'epg-parser';
 import parser from 'iptv-playlist-parser';
 import { normalizeXtreamServerUrl } from '@iptvnator/shared/interfaces';
 import { extractDrmFromRaw } from '@iptvnator/shared/m3u-utils';
+import { registerStreamProxyRoutes, StreamProxyFetch } from './stream-proxy';
 
 export interface WebBackendHttpGetOptions {
     readonly headers?: Record<string, string>;
@@ -43,6 +44,8 @@ export interface WebBackendAppOptions {
     readonly now?: () => Date;
     readonly resolveHostname?: (hostname: string) => Promise<readonly string[]>;
     readonly runtimeBackendUrl?: string;
+    readonly streamProxyFetch?: StreamProxyFetch;
+    readonly streamProxySecret?: Buffer;
 }
 
 interface ProviderUrlPolicy {
@@ -132,6 +135,23 @@ export function createWebBackendApp(
             res.json({ targetId });
         }
     );
+
+    registerStreamProxyRoutes(app, {
+        corsMiddleware,
+        fetchUpstream: options.streamProxyFetch,
+        getRegisteredOrigins: () =>
+            new Set(
+                [...providerTargets.values()].map((target) => target.origin)
+            ),
+        isUrlAllowed: async (url) => {
+            const result = await validateProviderUrl(
+                url.href,
+                providerUrlPolicy
+            );
+            return !('message' in result);
+        },
+        secret: options.streamProxySecret,
+    });
 
     app.get('/parse', corsMiddleware, async (req, res) => {
         const url = getRegisteredProviderUrl(req, res, providerTargets);

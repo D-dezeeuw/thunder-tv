@@ -50,4 +50,16 @@ export abstract class DataService {
         callback: (...args: unknown[]) => void
     ): void;
     abstract getAppEnvironment(): string;
+
+    /**
+     * Maps a direct provider stream URL to the URL the built-in players
+     * should actually load. Electron plays streams directly (no CORS);
+     * the PWA overrides this to route playback through the web backend's
+     * `/stream` relay when the stream's origin belongs to a registered
+     * provider target, so missing CORS headers on provider edges do not
+     * break browser playback.
+     */
+    resolvePlaybackUrl(streamUrl: string): string {
+        return streamUrl;
+    }
 }

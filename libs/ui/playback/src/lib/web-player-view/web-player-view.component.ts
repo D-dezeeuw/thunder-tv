@@ -25,7 +25,11 @@ import {
     VideoPlayer,
 } from '@iptvnator/shared/interfaces';
 import type { ExternalPlayerName } from '@iptvnator/shared/interfaces';
-import { RuntimeCapabilitiesService, SettingsStore } from '@iptvnator/services';
+import {
+    DataService,
+    RuntimeCapabilitiesService,
+    SettingsStore,
+} from '@iptvnator/services';
 import { ArtPlayerComponent } from '../art-player/art-player.component';
 import { EmbeddedMpvPlayerComponent } from '../embedded-mpv-player/embedded-mpv-player.component';
 import { HtmlVideoPlayerComponent } from '../html-video-player/html-video-player.component';
@@ -85,6 +89,8 @@ function resolveWebPlayerSharedControls(): boolean {
 export class WebPlayerViewComponent {
     storage = inject(StorageMap);
     private readonly runtime = inject(RuntimeCapabilitiesService);
+    /** Optional so bare component tests run without an app environment. */
+    private readonly dataService = inject(DataService, { optional: true });
 
     streamUrl = input.required<string>();
     title = input('');
@@ -137,7 +143,12 @@ export class WebPlayerViewComponent {
             : 'PLAYBACK_DIAGNOSTICS.INLINE_FAILURE_TITLE'
     );
 
-    readonly resolvedPlayback = computed<ResolvedPortalPlayback>(() => {
+    /**
+     * The original provider stream URL — kept for the diagnostics
+     * copy-URL action so users paste the direct URL into external
+     * players, not the environment-specific relay URL.
+     */
+    readonly sourcePlayback = computed<ResolvedPortalPlayback>(() => {
         const playback = this.playback();
         if (playback) {
             return playback;
@@ -148,6 +159,21 @@ export class WebPlayerViewComponent {
             title: this.title() || this.streamUrl(),
             startTime: this.startTime(),
         };
+    });
+    /**
+     * Playback with the stream URL the built-in players should load.
+     * In the PWA this routes registered provider streams through the
+     * backend `/stream` relay (provider edges often omit CORS headers);
+     * in Electron it is the direct URL.
+     */
+    readonly resolvedPlayback = computed<ResolvedPortalPlayback>(() => {
+        const playback = this.sourcePlayback();
+        const resolvedStreamUrl =
+            this.dataService?.resolvePlaybackUrl(playback.streamUrl) ??
+            playback.streamUrl;
+        return resolvedStreamUrl === playback.streamUrl
+            ? playback
+            : { ...playback, streamUrl: resolvedStreamUrl };
     });
     readonly resolvedIsLive = computed(() => {
         const playback = this.resolvedPlayback();

@@ -14,6 +14,7 @@ import {
     throwError,
 } from 'rxjs';
 import { DataService } from '@iptvnator/services';
+import { getPlaybackMediaExtensionFromUrl } from '@iptvnator/shared/m3u-utils';
 import {
     ERROR,
     Playlist,
@@ -73,6 +74,8 @@ export class PwaService extends DataService {
     private readonly translateService = inject(TranslateService);
     private readonly logger = createLogger('PwaService');
     private readonly providerTargetIds = new Map<string, Promise<string>>();
+    /** Origins of successfully registered provider targets. */
+    private readonly providerTargetOrigins = new Set<string>();
     private readonly silentXtreamActions = new Set<string>([
         XtreamCodeActions.GetAccountInfo,
         XtreamCodeActions.GetLiveCategories,
@@ -567,7 +570,10 @@ export class PwaService extends DataService {
                 { url }
             )
         )
-            .then((response) => response.targetId)
+            .then((response) => {
+                this.rememberProviderTargetOrigin(url);
+                return response.targetId;
+            })
             .catch((error) => {
                 this.providerTargetIds.delete(url);
                 throw error;
@@ -575,6 +581,46 @@ export class PwaService extends DataService {
 
         this.providerTargetIds.set(url, targetIdRequest);
         return targetIdRequest;
+    }
+
+    private rememberProviderTargetOrigin(url: string): void {
+        try {
+            this.providerTargetOrigins.add(new URL(url).origin);
+        } catch {
+            // Non-URL registrations (should not happen) are simply skipped.
+        }
+    }
+
+    /**
+     * Routes playback through the backend `/stream` relay for streams whose
+     * origin belongs to a registered provider target. Provider edges are
+     * often missing CORS headers (or only on some load-balanced edges),
+     * which blocks hls.js/mpegts.js in the browser; the relay fetches
+     * server-side and re-serves with CORS. Non-provider URLs (e.g. plain
+     * M3U channels from other hosts) stay direct.
+     */
+    override resolvePlaybackUrl(streamUrl: string): string {
+        let origin: string;
+        try {
+            origin = new URL(streamUrl).origin;
+        } catch {
+            return streamUrl;
+        }
+
+        if (!this.providerTargetOrigins.has(origin)) {
+            return streamUrl;
+        }
+
+        const encoded = btoa(streamUrl)
+            .replace(/\+/g, '-')
+            .replace(/\//g, '_')
+            .replace(/=+$/, '');
+        // The relay URL hides the original path, so carry the media
+        // extension explicitly — engine selection (hls.js vs mpegts.js vs
+        // native) reads the `ext` query key with top priority.
+        const extension = getPlaybackMediaExtensionFromUrl(streamUrl);
+        const extensionSuffix = extension ? `&ext=${extension}` : '';
+        return `${this.corsProxyUrl}/stream?u=${encoded}${extensionSuffix}`;
     }
 
     removeAllListeners(type: string): void {
